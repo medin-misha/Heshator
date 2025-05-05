@@ -1,0 +1,19 @@
+import redis.asyncio as redis
+from redis.typing import ResponseT, EncodableT, KeyT
+
+
+class RedisDatabase():
+    def __init__(self, url: str):
+        self.redis_connect: redis.client.Redis = redis.from_url(url)
+
+    async def set(self, key: KeyT, value: EncodableT) -> None:
+        async with self.redis_connect.pipeline(transaction=True) as pipe:
+            stmt = await pipe.set(name=key, value=value)
+            response = await stmt.execute()
+            return response[0]
+
+    async def get(self, key) -> ResponseT:
+        async with self.redis_connect.pipeline(transaction=True) as pipe:
+            stmt = await pipe.get(key)
+            response = await stmt.execute()
+            return response[0]
