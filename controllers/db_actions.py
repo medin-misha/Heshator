@@ -15,3 +15,13 @@ async def create_hash(data: CreateHash) -> ReturnHash:
     else:
         await database.set(key=string, value=hash, timeout=data.timeout)
         return ReturnHash(string=string, hash=hash)
+
+
+async def delete_hash(key: str) -> None:
+    database = RedisDB(url=settings.redis.url)
+    if await database.get(key):
+        await database.delete(key=key)
+        return
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND
+    )

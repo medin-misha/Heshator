@@ -12,8 +12,13 @@ class RedisDatabase():
             response = await stmt.execute()
             return response[0]
 
-    async def get(self, key) -> ResponseT:
+    async def get(self, key: KeyT) -> ResponseT:
         async with self.redis_connect.pipeline(transaction=True) as pipe:
             stmt = await pipe.get(key)
             response = await stmt.execute()
             return response[0]
+
+    async def delete(self, key: KeyT) -> None:
+        async with self.redis_connect.pipeline(transaction=True) as pipe:
+            stmt = await pipe.getdel(name=key)
+            await stmt.execute()
