@@ -1,9 +1,7 @@
 import hashlib
-from encodings.utf_16_le import encode
 
 
 def hash_data(data: bytes) -> str:
-    hash_object = hashlib.sha256()
-    hash_object.update(data)
+    hash_object = hashlib.md5(data)
     return hash_object.hexdigest()
 
