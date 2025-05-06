@@ -1,10 +1,10 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, PositiveInt
 
 class BaseHash(BaseModel):
     string: str
 
 class CreateHash(BaseHash):
-    pass
+    timeout: PositiveInt
 
 class ReturnHash(BaseHash):
     hash: str

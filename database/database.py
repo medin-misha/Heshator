@@ -6,9 +6,9 @@ class RedisDatabase():
     def __init__(self, url: str):
         self.redis_connect: redis.client.Redis = redis.from_url(url)
 
-    async def set(self, key: KeyT, value: EncodableT) -> None:
+    async def set(self, key: KeyT, value: EncodableT, timeout: int = None) -> None:
         async with self.redis_connect.pipeline(transaction=True) as pipe:
-            stmt = await pipe.set(name=key, value=value)
+            stmt = await pipe.set(name=key, value=value, ex=timeout)
             response = await stmt.execute()
             return response[0]
 
