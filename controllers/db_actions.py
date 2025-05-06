@@ -27,6 +27,17 @@ async def delete_hash(key: str) -> None:
         status_code=status.HTTP_404_NOT_FOUND
     )
 
+
 async def get_all_hashes() -> List[bytes]:
     database = RedisDB(url=settings.redis.url)
     return await database.get_all()
+
+
+async def get_hash_by_key(key: str) -> str:
+    database = RedisDB(url=settings.redis.url)
+    hash = await database.get(key)
+    if hash:
+        return hash
+    raise HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND
+    )
