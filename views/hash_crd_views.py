@@ -1,6 +1,7 @@
 from fastapi import APIRouter
+from typing import List
 from schemas import CreateHash, ReturnHash
-from controllers import create_hash, delete_hash
+from controllers import create_hash, delete_hash, get_all_hashes
 
 router = APIRouter(prefix="/hash", tags=["hash"])
 
@@ -13,3 +14,8 @@ async def create_hash_view(data: CreateHash) -> ReturnHash:
 @router.delete("/{key}", status_code=204)
 async def delete_hash_view(key: str) -> None:
     return await delete_hash(key=key)
+
+
+@router.get("/")
+async def get_all_hashes_view() -> List[str]:
+    return await get_all_hashes()

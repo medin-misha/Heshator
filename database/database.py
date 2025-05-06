@@ -22,3 +22,9 @@ class RedisDatabase():
         async with self.redis_connect.pipeline(transaction=True) as pipe:
             stmt = await pipe.getdel(name=key)
             await stmt.execute()
+
+    async def get_all(self) -> ResponseT:
+        async with self.redis_connect.pipeline() as pipe:
+            stmt = await pipe.keys()
+            response = await stmt.execute()
+            return response[0]

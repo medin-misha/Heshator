@@ -1,4 +1,5 @@
 from fastapi import HTTPException, status
+from typing import List
 from database import RedisDB
 from controllers import hash_data
 from schemas import CreateHash, ReturnHash
@@ -25,3 +26,7 @@ async def delete_hash(key: str) -> None:
     raise HTTPException(
         status_code=status.HTTP_404_NOT_FOUND
     )
+
+async def get_all_hashes() -> List[bytes]:
+    database = RedisDB(url=settings.redis.url)
+    return await database.get_all()
