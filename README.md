@@ -43,4 +43,6 @@ docker-compose up
 3. `DELETE /api/v1/hash/{key}` — удалить хеш по ключу (если существует).
 4. `GET /api/v1/hash/{key}` — получить хеш по ключу (если существует).
 
----
+## К стати архитектура у проекта следующая
+![image](https://github.com/user-attachments/assets/4db50798-1da2-414f-8804-f3ffdb11fa7b)
+
